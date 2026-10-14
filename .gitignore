@@ -1,0 +1,21 @@
+# Build artifacts
+build/
+out/
+cmake-build-*/
+CMakeUserPresets.json
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+
+# Runtime data
+*.csv
+*.log
+telemetry.csv
+
+# Python
+__pycache__/
+*.pyc
+.venv/
