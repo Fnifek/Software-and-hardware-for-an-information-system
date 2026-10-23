@@ -2,10 +2,29 @@
 
 #include <thread>
 
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <timeapi.h>
+#pragma comment(lib, "winmm.lib")
+#endif
+
 namespace ctm {
 
 Sampler::Sampler(double fs_hz)
-    : fs_hz_(fs_hz), period_(1.0 / fs_hz), next_(Clock::now()) {}
+    : fs_hz_(fs_hz), period_(1.0 / fs_hz), next_(Clock::now()) {
+#ifdef _WIN32
+    // Без повышения разрешения таймера Sleep округляет 10 мс до ~15,6 мс,
+    // и блок дискретизации теряет каждый второй такт.
+    timeBeginPeriod(1);
+#endif
+}
+
+Sampler::~Sampler() {
+#ifdef _WIN32
+    timeEndPeriod(1);
+#endif
+}
 
 void Sampler::reset() {
     next_ = Clock::now();

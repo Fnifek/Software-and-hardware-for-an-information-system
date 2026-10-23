@@ -13,6 +13,7 @@ namespace ctm {
 class Sampler {
 public:
     explicit Sampler(double fs_hz);
+    ~Sampler();
 
     // Ожидает очередной такт. Возвращает true, если такт выдержан,
     // и false, если потребитель опоздал (такт пропущен, сетка восстановлена).

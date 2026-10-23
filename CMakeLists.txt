@@ -19,6 +19,11 @@ add_library(ctm_core STATIC
 )
 target_include_directories(ctm_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+if(WIN32)
+    # timeBeginPeriod/timeEndPeriod для точной сетки дискретизации
+    target_link_libraries(ctm_core PUBLIC winmm)
+endif()
+
 add_executable(ctm_acq src/main.cpp)
 target_link_libraries(ctm_acq PRIVATE ctm_core)
 
